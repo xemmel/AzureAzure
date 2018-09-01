@@ -5,6 +5,7 @@
 *   [Install PowerShell](#install-powershell)
 *   [Starting PowerShell](#starting-powershell)
 * [Service Bus](#service-bus)
+*   [List all Topics](#list-all-topics)
 *   [Creating a subscription](#creating-a-subscription)
 
 # PowerShell
@@ -47,10 +48,36 @@ Connect-AzureRmAccount
 
 # Service Bus
 
+## List all Topics
+
+```powershell
+
+$rg = "MY_RESOURCE_GROUP"
+$ns = "SERVICE_BUS_NAMESPACE"
+$topics = Get-AzureRmServiceBusTopic -ResourceGroupName $rg -Namespace $ns
+foreach($topic in $topics)
+{
+    Write-Host $topic.Name
+    $subs = Get-AzureRmServiceBusSubscription -ResourceGroupName $rg -Namespace $ns -Topic $topic.Name
+    foreach($sub in $subs)
+    {
+        Write-Host "`tSub:"  $sub.Name
+        $filters = Get-AzureRmServiceBusRule -ResourceGroupName $rg -Namespace $ns -Topic $topic.Name -Subscription $sub.Name
+        foreach($filter in $filters) 
+        {
+            Write-Host "`t`tFilter:" $filter.SqlFilter.SqlExpression
+        }
+    }
+}
+
+```
+
+[Back to top](#table-of-content)
+
 ## Creating a Subscription
 
 ```powershell
-$rg = "MY_RESOURCE"
+$rg = "MY_RESOURCE_GROUP"
 $ns = "SERVICE_BUS_NAMESPACE"
 $topic = "TOPIC_NAME"
 $sub = "NAME_OF_NEW_SUBSCRIPTION"
@@ -64,3 +91,4 @@ New-AzureRmServiceBusRule -ResourceGroupName $rg -Namespace $ns -Topic $topic -S
 ```
 
 [Back to top](#table-of-content)
+

@@ -11,6 +11,8 @@
 + [Storage](#storage)
 1. [List all Storage Accounts](#list-all-storage-accounts)
 2. [Storage Account Details](#storage-account-details)
++ [Logic Apps](#logic-apps)
+1. [List all Logic Apps](#list-all-logic-apps)
 
 # PowerShell
 
@@ -131,3 +133,14 @@ Get-AzureRmStorageAccount -ResourceGroupName "[RESOURCE_GROUP]" -Name "[STORAGE_
 ```
 
 [Back to top](#table-of-content)
+
+
+# Logic Apps
+
+## List of all Logic Apps
+
+```csharp
+Get-AzureRmResource -ResourceType "Microsoft.Logic/workflows"
+```
+[Back to top](#table-of-content)
+

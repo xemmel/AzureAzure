@@ -2,10 +2,10 @@
 
 ## Table of Content
 * [PowerShell](#powershell)
-*    [Install PowerShell](#install-powershell)
-*    [Starting PowerShell](#starting-powershell)
+*   [Install PowerShell](#install-powershell)
+*   [Starting PowerShell](#starting-powershell)
 * [Service Bus](#service-bus)
-*    [Creating a subscription](#creating-a-subscription)
+*   [Creating a subscription](#creating-a-subscription)
 
 # PowerShell
 

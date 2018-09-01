@@ -1,9 +1,13 @@
 # Microsoft AZURE by Morten la Cour
 
 ## Table of Content
-* [Powershell](#powershell)
-*    [Install Powershell](#install-powershell)
-*    [Starting Powershell](#starting-powershell)
+* [PowerShell](#powershell)
+*    [Install PowerShell](#install-powershell)
+*    [Starting PowerShell](#starting-powershell)
+* [Service Bus](#service-bus)
+*    [Creating a subscription](#creating-a-subscription)
+
+# PowerShell
 
 ## Install Powershell
 
@@ -36,6 +40,27 @@ This step needs to be done every time *PowerShell* is started. The import part, 
 ```powershell
 Import-Module AzureRM
 Connect-AzureRmAccount
+```
+
+[Back to top](#table-of-content)
+
+
+# Service Bus
+
+## Creating a Subscription
+
+```powershell
+$rg = "MY_RESOURCE"
+$ns = "SERVICE_BUS_NAMESPACE"
+$topic = "TOPIC_NAME"
+$sub = "NAME_OF_NEW_SUBSCRIPTION"
+$ruleName = "NAME_OF_NEW_RULE"
+$filter = "(receiver = 'thereceiver')"
+
+New-AzureRmServiceBusSubscription -ResourceGroupName $rg -Namespace $ns -Topic $topic -SubscriptionName $sub
+New-AzureRmServiceBusRule -ResourceGroupName $rg -Namespace $ns -Topic $topic -Subscription $sub -SqlExpression $filter  -Name $ruleName
+
+
 ```
 
 [Back to top](#table-of-content)

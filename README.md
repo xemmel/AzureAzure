@@ -2,8 +2,9 @@
 
 ## Table of Content
 * [PowerShell](#powershell)
-*   [Install PowerShell](#install-powershell)
-*   [Starting PowerShell](#starting-powershell)
+-   [Install PowerShell](#install-powershell)
+-   [Starting PowerShell](#starting-powershell)
+-   [Exploring PowerShell](#exploring-powershell)
 * [Service Bus](#service-bus)
 *   [List all Topics](#list-all-topics)
 *   [Creating a subscription](#creating-a-subscription)
@@ -45,6 +46,24 @@ Connect-AzureRmAccount
 
 [Back to top](#table-of-content)
 
+## Exploring PowerShell
+
+
+### Get a list of all available modules
+
+```powershell
+Get-Module -Name AzureRM*
+```
+
+### Get a list of commands
+In this example all commands in the module *AzureRM.ServiceBus* is retrieved
+
+```powershell
+Get-Command -Module AzureRM.ServiceBus
+```
+
+
+[Back to top](#table-of-content)
 
 # Service Bus
 

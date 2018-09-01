@@ -7,6 +7,7 @@
 3. [Changing Subscription](#changing-subscription)
 4. [Exploring PowerShell](#exploring-powershell)
 + [Service Bus](#service-bus)
+1. [List all Queues](#list-all-queues)
 1. [List all Topics](#list-all-topics)
 2. [Creating a subscription](#creating-a-subscription)
 + [Storage](#storage)
@@ -99,6 +100,20 @@ Get-Command -Module AzureRM.ServiceBus
 [Back to top](#table-of-content)
 
 # Service Bus
+
+## List all Queues
+
+```powershell
+Get-AzureRmServiceBusNamespace -ResourceGroupName [resourceGroup] -Name [namespace] | select ResourceGroup, @{Name="Namespace";Expression={$_."Name"}} | Get-AzureRmServiceBusQueue | select Name
+```
+Note that piping in PowerShell can pass parameters through pipes. However in this case the namespace's *Name* needs to be mapped to *Namespace* in order to be passed to the *Get-Queue* Cmdlet. 
+
+The example above is only to show how to map parameters, the same can be accomplished by this:
+
+```powershell
+Get-AzureRmServiceBusQueue -ResourceGroupName [resourceGroup] -Namespace [namespace]
+```
+[Back to top](#table-of-content)
 
 ## List all Topics
 

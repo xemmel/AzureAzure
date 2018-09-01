@@ -1,13 +1,13 @@
 # Microsoft AZURE by Morten la Cour
 
 ## Table of Content
-1. [PowerShell](#powershell)
-- [Install PowerShell](#install-powershell)
--   [Starting PowerShell](#starting-powershell)
--   [Exploring PowerShell](#exploring-powershell)
-* [Service Bus](#service-bus)
-*   [List all Topics](#list-all-topics)
-*   [Creating a subscription](#creating-a-subscription)
++ [PowerShell](#powershell)
+1. [Install PowerShell](#install-powershell)
+2. [Starting PowerShell](#starting-powershell)
+3. [Exploring PowerShell](#exploring-powershell)
++ [Service Bus](#service-bus)
+1. [List all Topics](#list-all-topics)
+2. [Creating a subscription](#creating-a-subscription)
 
 # PowerShell
 

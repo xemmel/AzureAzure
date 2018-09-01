@@ -13,6 +13,7 @@
 2. [Storage Account Details](#storage-account-details)
 + [Logic Apps](#logic-apps)
 1. [List all Logic Apps](#list-all-logic-apps)
+2. [Enable a Logic App](#enable-a-logic-app)
 
 # PowerShell
 
@@ -144,3 +145,9 @@ Get-AzureRmResource -ResourceType "Microsoft.Logic/workflows"
 ```
 [Back to top](#table-of-content)
 
+## Enable a Logic App
+
+```powershell
+Set-AzureRmLogicApp -ResourceGroupName "[RESOURCE_GROUP]" -Name "[STORAGE_ACCOUNT]" -State Enabled
+```
+[Back to top](#table-of-content)

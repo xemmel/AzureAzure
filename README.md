@@ -8,6 +8,9 @@
 + [Service Bus](#service-bus)
 1. [List all Topics](#list-all-topics)
 2. [Creating a subscription](#creating-a-subscription)
++ [Storage](#storage)
+1. [List all Storage Accounts](#list-all-storage-accounts)
+2. [Storage Account Details](#storage-account-details)
 
 # PowerShell
 
@@ -111,3 +114,20 @@ New-AzureRmServiceBusRule -ResourceGroupName $rg -Namespace $ns -Topic $topic -S
 
 [Back to top](#table-of-content)
 
+#Storage
+
+## List all Storage Accounts
+
+```powershell
+Get-AzureRmStorageAccount
+```
+
+[Back to top](#table-of-content)
+
+## Storage Account Details
+
+```powershell
+Get-AzureRmStorageAccount -ResourceGroupName "[RESOURCE_GROUP]" -Name "[STORAGE_ACCOUNT]" | format-list -Property *
+```
+
+[Back to top](#table-of-content)

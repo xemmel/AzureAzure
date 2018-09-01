@@ -4,7 +4,8 @@
 + [PowerShell](#powershell)
 1. [Install PowerShell](#install-powershell)
 2. [Starting PowerShell](#starting-powershell)
-3. [Exploring PowerShell](#exploring-powershell)
+3. [Changing Subscription](#changing-subscription)
+4. [Exploring PowerShell](#exploring-powershell)
 + [Service Bus](#service-bus)
 1. [List all Topics](#list-all-topics)
 2. [Creating a subscription](#creating-a-subscription)
@@ -49,8 +50,32 @@ This step needs to be done every time *PowerShell* is started. The import part, 
 Import-Module AzureRM
 Connect-AzureRmAccount
 ```
+You might need to set the following in order to be able to run **Import-Module**
+```powershell
+Set-ExecutionPolicy RemoteSigned
+```
 
 [Back to top](#table-of-content)
+
+## Changing Subscription
+If more than one subscription is attached to your *Azure Account* you might need to change the subscription you are pointing at.
+
+### Check current subscription
+
+```powershell
+Get-AzureRmContext
+```
+### List all subscriptions
+```powershell
+Get-AzureRmSubscription
+```
+If you need to change the subscription, get the **ID** from the list of subscriptions and use the following command
+
+```powershell
+Select-AzureRmSubscription -SubscriptionId [Id]
+```
+[Back to top](#table-of-content)
+
 
 ## Exploring PowerShell
 

@@ -1,8 +1,8 @@
 # Microsoft AZURE by Morten la Cour
 
 ## Table of Content
-- [PowerShell](#powershell)
--- [Install PowerShell](#install-powershell)
+1. [PowerShell](#powershell)
+- [Install PowerShell](#install-powershell)
 -   [Starting PowerShell](#starting-powershell)
 -   [Exploring PowerShell](#exploring-powershell)
 * [Service Bus](#service-bus)

@@ -15,6 +15,8 @@
 + [Logic Apps](#logic-apps)
 1. [List all Logic Apps](#list-all-logic-apps)
 2. [Enable a Logic App](#enable-a-logic-app)
++ [API Management](#api-management)
+1. [List API'S](#list-apis)
 
 # PowerShell
 
@@ -142,7 +144,7 @@ New-AzureRmServiceBusRule -ResourceGroupName $rg -Namespace $ns -Topic $topic -S
 
 [Back to top](#table-of-content)
 
-#Storage
+# Storage
 
 ## List all Storage Accounts
 
@@ -175,4 +177,15 @@ Get-AzureRmResource -ResourceType "Microsoft.Logic/workflows"
 ```powershell
 Set-AzureRmLogicApp -ResourceGroupName "[RESOURCE_GROUP]" -Name "[STORAGE_ACCOUNT]" -State Enabled
 ```
+[Back to top](#table-of-content)
+
+# API Management
+
+# List APIS
+
+```powershell
+$apicontext = New-AzureRmApiManagementContext -ResourceGroupName [Resource Group] -ServiceName [name of Service]
+Get-AzureRmApiManagementApi -Context $apicontext
+```
+
 [Back to top](#table-of-content)

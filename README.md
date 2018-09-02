@@ -8,8 +8,9 @@
 4. [Exploring PowerShell](#exploring-powershell)
 + [Service Bus](#service-bus)
 1. [List all Queues](#list-all-queues)
-1. [List all Topics](#list-all-topics)
-2. [Creating a subscription](#creating-a-subscription)
+2. [List all Topics](#list-all-topics)
+3. [Creating a subscription](#creating-a-subscription)
+4. [All from scratch](#all-from-scratch)
 + [Storage](#storage)
 1. [List all Storage Accounts](#list-all-storage-accounts)
 2. [Storage Account Details](#storage-account-details)
@@ -159,6 +160,43 @@ New-AzureRmServiceBusRule -ResourceGroupName $rg -Namespace $ns -Topic $topic -S
 
 [Back to top](#table-of-content)
 
+## All from scratch
+
+Check to see if the SB-Namespace is available
+```powershell
+Test-AzureRmServiceBusName -Namespace stupidnamespace
+```
+If the result **NameAvailable** is True, you can grab the globally unique namespace
+
+Create the namespace
+
+```powershell
+New-AzureRmServiceBusNamespace -ResourceGroupName [ResourceGroupName] -Name stupidnamespace -Location "West Europe"
+```
+
+Retrieve the connection-string
+> When created the namespace will only hold one Auth-Rule (RootManageSharedAccessKey) if others are created, all Auth-Rules can be listed here
+
+```powershell
+Get-AzureRmServiceBusAuthorizationRule -ResourceGroupName [ResourceGroupName] -Namespace stupidnamespace
+```
+
+Now get the connection-string from the rule (Replace *RootManageSharedAccessKey* if you wish to use another rule)
+
+```powershell
+Get-AzureRmServiceBusKey -ResourceGroupName MLC_Temp -Namespace stupidnamespace -Name RootManageSharedAccessKey | select PrimaryConnectionString
+```
+The last *pipe* is optional, it just gives us the ability to better see the *PrimaryConnectionString*
+
+Create a new queue with *Duplicate Detection* enabled
+```powershell
+New-AzureRmServiceBusQueue -ResourceGroupName [ResourceGroupName] -Namespace stupidnamespace -Name messagein -RequiresDuplicateDetection $True
+```
+
+
+[Back to top](#table-of-content)
+
+
 # Storage
 
 ## List all Storage Accounts
@@ -202,5 +240,13 @@ Set-AzureRmLogicApp -ResourceGroupName "[RESOURCE_GROUP]" -Name "[STORAGE_ACCOUN
 $apicontext = New-AzureRmApiManagementContext -ResourceGroupName [Resource Group] -ServiceName [name of Service]
 Get-AzureRmApiManagementApi -Context $apicontext
 ```
+
+[Back to top](#table-of-content)
+
+## Azure On-premises Data Gateway
+
+### Install the gateway on an on-prem Server
+Download the *GatewayInstall.exe* from the following address [https://aka.ms/azureasgateway](https://aka.ms/azureasgateway)
+
 
 [Back to top](#table-of-content)

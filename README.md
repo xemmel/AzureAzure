@@ -19,6 +19,11 @@
 + [Storage](#storage)
 1. [List all Storage Accounts](#list-all-storage-accounts)
 2. [Storage Account Details](#storage-account-details)
+3. [Create Storage Account](#create-storage-account)
+4. [Create Blob Container](#create-blob-container)
+5. [Upload File to Blob Container](#upload-file-to-blob-container)
+6. [List Blobs in Container](#list-blobs-in-container)
+7. [Download Blob](#download-blob)
 + [Logic Apps](#logic-apps)
 1. [List all Logic Apps](#list-all-logic-apps)
 2. [Enable a Logic App](#enable-a-logic-app)
@@ -241,7 +246,7 @@ New-AzureRmServiceBusQueue -ResourceGroupName [ResourceGroupName] -Namespace stu
 ## List all Storage Accounts
 
 ```powershell
-Get-AzureRmStorageAccount
+Get-AzStorageAccount
 ```
 
 [Back to top](#table-of-content)
@@ -249,7 +254,43 @@ Get-AzureRmStorageAccount
 ## Storage Account Details
 
 ```powershell
-Get-AzureRmStorageAccount -ResourceGroupName "[RESOURCE_GROUP]" -Name "[STORAGE_ACCOUNT]" | format-list -Property *
+Get-AzStorageAccount -ResourceGroupName "[RESOURCE_GROUP]" -Name "[STORAGE_ACCOUNT]" | format-list -Property *
+```
+## Create Storage Account
+
+```powershell
+$storageAccount = New-AzStorageAccount -ResourceGroupName $resourcegroup -Name $storageName -Location $location -SkuName Standard_LRS -Kind StorageV2 -AccessTier Hot
+
+$storageContext = $storageAccount.Context
+```
+
+## Create Blob Container
+
+```powershell
+New-AzStorageContainer -Name $blobContainerName -Context $storageContext
+```
+
+## Upload File to Blob Container
+
+> If you need a test file
+```powershell
+New-Item -Path $filePath -Name $fileName -Type File -Value "This is the content"
+```
+
+```powershell
+Set-AzStorageBlobContent -File "$filePath\$fileName" -Container $blobContainerName -Context $storageContext -Blob $fileName
+```
+
+## List Blobs in Container
+
+```powershell
+Get-AzStorageBlob -Container $blobContainerName -Context $storageContext
+```
+
+## Download Blob
+
+```powershell
+Get-AzStorageBlobContent -Blob $fileName -Container $blobContainerName -Context $storageContext -Destination C:\temp\fromazure.txt
 ```
 
 [Back to top](#table-of-content)

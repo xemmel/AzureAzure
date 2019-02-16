@@ -8,6 +8,9 @@
 2. [Starting PowerShell](#starting-powershell)
 3. [Changing Subscription](#changing-subscription)
 4. [Exploring PowerShell](#exploring-powershell)
++ [Resource Groups](#resource-groups)
+1. [Create Resource Group](#create-resource-group)
+2. [Delete Resource Group](#delete-resource-group)
 + [Service Bus](#service-bus)
 1. [List all Queues](#list-all-queues)
 2. [List all Topics](#list-all-topics)
@@ -65,8 +68,8 @@ Install-Module -Name Az -AllowClobber
 This step needs to be done every time *PowerShell* is started. The import part, however, can be automated by setting up a *PowerShell Profile*
 
 ```powershell
-Import-Module AzureRM
-Connect-AzureRmAccount
+Import-Module AZ
+Connect-AzAccount
 ```
 You might need to set the following in order to be able to run **Import-Module**
 ```powershell
@@ -111,6 +114,28 @@ In this example all commands in the module *AzureRM.ServiceBus* is retrieved
 Get-Command -Module Az.ServiceBus
 ```
 
+
+[Back to top](#table-of-content)
+
+# Resource Groups
+
+> List all *Resource Groups*
+
+```powershell
+Get-AzResourceGroup | Select-Object ResourceGroupName, Location
+```
+
+## Create Resource Group
+
+```powershell
+New-AzResourceGroup -Name $resourcegroup -Location $location
+```
+
+## Delete Resource Group
+
+```powershell
+Remove-AzResourceGroup -Name $resourcegroup -Force
+```
 
 [Back to top](#table-of-content)
 

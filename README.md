@@ -31,6 +31,7 @@
 1. [List API'S](#list-apis)
 + [Event Grid](#event-grid)
 1. [Create Standard Subscription](#create-standard-subscription)
+2. [Create a Custom Topic](#create-a-custom-topic)
 # PowerShell
 
 ## Install Powershell
@@ -361,7 +362,7 @@ New-AzEventGridSubscription -EventSubscriptionName storageToRequestBin -Resource
 > NOTE: If you are using just an HTTP endpoint and not a true *WebHook* you will receive a **validationUrl** that you manually needs 
 > to call with a *GET Method*
 
-> Validation data sent to Endpoint
+### Validation data sent to Endpoint
 
 ```json
 [{
@@ -381,7 +382,90 @@ New-AzEventGridSubscription -EventSubscriptionName storageToRequestBin -Resource
 ```
 
 > When calling the *validationUrl* you should see the following message (note the spelling error, NICE MS!!)
-*"Webhook succesfully validated as a subscription endpoint"*
+> *"Webhook succesfully validated as a subscription endpoint"*
+
+### Data when a Blob is Created
+
+```json
+[
+    {
+        "topic": "/subscriptions/4954f2df-57b6-4e04-bcc5-f92b0b63837c/resourceGroups/sandbox/providers/Microsoft.Storage/storageAccounts/sandstorage",
+        "subject": "/blobServices/default/containers/demo/blobs/order.edi",
+        "eventType": "Microsoft.Storage.BlobCreated",
+        "eventTime": "2019-02-16T16:01:27.9973176Z",
+        "id": "f59b3322-f01e-0151-4010-c6e9ab0610ef",
+        "data": {
+            "api": "PutBlob",
+            "clientRequestId": "Azure-Storage-PowerShell-982add45-4b77-40ec-bc9e-03398aaa5a9d",
+            "requestId": "f59b3322-f01e-0151-4010-c6e9ab000000",
+            "eTag": "0x8D69428026F6C1F",
+            "contentType": "application/octet-stream",
+            "contentLength": 550,
+            "blobType": "BlockBlob",
+            "url": "https://sandstorage.blob.core.windows.net/demo/order.edi",
+            "sequencer": "000000000000000000000000000005C3000000000017880a",
+            "storageDiagnostics": {
+                "batchId": "7ed4da80-fb56-46dd-833e-d0202a9a3753"
+            }
+        },
+        "dataVersion": "",
+        "metadataVersion": "1"
+    }
+]
+
+```
+
+
+
+## Create a Custom Topic
+
+```powershell
+New-AzEventGridTopic -ResourceGroupName $resourcegroup -Location $location -Name mycustomtopic
+
+ResourceGroupName : sandbox
+TopicName         : mycustomtopic
+Id                : /subscriptions/4954f2df-57b6-4e04-bcc5-f92b0b63837c/resourceGroups/sandbox/providers/Microsoft.EventGrid/topics/mycustomtopic
+Type              : Microsoft.EventGrid/topics
+Location          : westeurope
+Endpoint          : https://mycustomtopic.westeurope-1.eventgrid.azure.net/api/events
+ProvisioningState : Succeeded
+Tags              :
+
+```
+
+### Subscribe to the custom Topic
+
+```powershell
+New-AzEventGridSubscription -EventSubscriptionName CustomToRequstBin -Endpoint $endpoint -TopicName mycustomtopic -ResourceGroupName $resourcegroup
+
+
+```
+
+### Submit to Custom Topic
+
+```powershell
+$topicendpoint = (Get-AzEventGridTopic -ResourceGroupName $resourcegroup -Name mycustomtopic).Endpoint
+$topickeys = Get-AzEventGridTopicKey -ResourceGroupName $resourcegroup -Name mycustomtopic
+
+```
+
+Set Request Header:
+aeg-sas-key : $topickeys.Key1
+
+Minimum body
+```json
+[{
+	"id" : "1807",
+	"subject" : "myapp/Morten",
+	"eventType" : "Something",
+	"eventTime" : "2019-01-01"
+}]
+
+```
+
+HTTP POST: $topicendpoint
+
+> $topicendpoint (https://mycustomtopic.westeurope-1.eventgrid.azure.net/api/events)
 
 
 [Back to top](#table-of-content)

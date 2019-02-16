@@ -1,5 +1,7 @@
 # Microsoft AZURE by Morten la Cour
 
+> Starting migration to the **Azure PowerShell Az module**
+
 ## Table of Content
 + [PowerShell](#powershell)
 1. [Install PowerShell](#install-powershell)
@@ -29,7 +31,17 @@
 
 > Make sure you are running at least *Powershell* version 5.0. Check this by running the following command
 
-> Also *Powershell* version 6.0 uses __.NET Core__ which is not supported by *PowerShell AzureRM*
+> When using *AZ* instead of *AzureRM* *Powershell* version 6.* is recommended. Also .NET Framework 4.7.2 is required.
+
+Check .NET Framework version
+
+```powershell
+Get-ChildItem 'HKLM:\SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full\'
+
+```
+The **Release** number should be at least *461808*
+
+Check Powershell version
 
 ```powershell
 
@@ -37,16 +49,18 @@ $PSVersionTable.PSVersion
 
 ```
 
-Now install the *AzureRM Powershell Module* say *Yes* or *Yes to All* when prompted
+Now install the *AZ Powershell Module* say *Yes* or *Yes to All* when prompted
 
 ```powershell
-Install-Module -Name AzureRM
+Install-Module -Name Az -AllowClobber
 ```
 
 
 [Back to top](#table-of-content)
 
 ## Starting Powershell
+
+> MIGHT BE OBSOLETE USING AZ??
 
 This step needs to be done every time *PowerShell* is started. The import part, however, can be automated by setting up a *PowerShell Profile*
 
@@ -67,16 +81,16 @@ If more than one subscription is attached to your *Azure Account* you might need
 ### Check current subscription
 
 ```powershell
-Get-AzureRmContext
+Get-AzContext
 ```
 ### List all subscriptions
 ```powershell
-Get-AzureRmSubscription
+Get-AzSubscription
 ```
-If you need to change the subscription, get the **ID** from the list of subscriptions and use the following command
+If you need to change the subscription, get the **Id** from the list of subscriptions and use the following command
 
 ```powershell
-Select-AzureRmSubscription -SubscriptionId [Id]
+Select-AzSubscription -SubscriptionId [Id]
 ```
 [Back to top](#table-of-content)
 
@@ -84,17 +98,17 @@ Select-AzureRmSubscription -SubscriptionId [Id]
 ## Exploring PowerShell
 
 
-### Get a list of all available modules
+### Get a list of all available modules (Sort by version)
 
 ```powershell
-Get-Module -Name AzureRM*
+Get-Module Az.* -ListAvailable | Sort-Object Version
 ```
 
 ### Get a list of commands
 In this example all commands in the module *AzureRM.ServiceBus* is retrieved
 
 ```powershell
-Get-Command -Module AzureRM.ServiceBus
+Get-Command -Module Az.ServiceBus
 ```
 
 
@@ -221,7 +235,7 @@ Get-AzureRmStorageAccount -ResourceGroupName "[RESOURCE_GROUP]" -Name "[STORAGE_
 ## List of all Logic Apps
 
 ```csharp
-Get-AzureRmResource -ResourceType "Microsoft.Logic/workflows"
+
 ```
 [Back to top](#table-of-content)
 
@@ -234,7 +248,7 @@ Set-AzureRmLogicApp -ResourceGroupName "[RESOURCE_GROUP]" -Name "[STORAGE_ACCOUN
 
 # API Management
 
-# List APIS
+## List APIS
 
 ```powershell
 $apicontext = New-AzureRmApiManagementContext -ResourceGroupName [Resource Group] -ServiceName [name of Service]
@@ -246,7 +260,14 @@ Get-AzureRmApiManagementApi -Context $apicontext
 ## Azure On-premises Data Gateway
 
 ### Install the gateway on an on-prem Server
-Download the *GatewayInstall.exe* from the following address [https://aka.ms/azureasgateway](https://aka.ms/azureasgateway)
+- Download the *GatewayInstall.exe* from the following address [https://aka.ms/azureasgateway](https://aka.ms/azureasgateway)
+- Install and configure, follow the instructions
+- You should now have a *Windows Service* named **Microsoft.PowerBI.EnterpriseGateway.exe** running
+- Configure an **On-premises Data Gateway** in Azure, signing in with the same name as used when configuring the on-prem service
+
+> (some *Location* restriction may be required. I had to change from *West Europe* to *North Europe* before anything showed up in
+>  the **Installation Name** dropdown?)
+
 
 
 [Back to top](#table-of-content)

@@ -29,7 +29,8 @@
 2. [Enable a Logic App](#enable-a-logic-app)
 + [API Management](#api-management)
 1. [List API'S](#list-apis)
-
++ [Event Grid](#event-grid)
+1. [Create Standard Subscription](#create-standard-subscription)
 # PowerShell
 
 ## Install Powershell
@@ -124,10 +125,15 @@ Get-Command -Module Az.ServiceBus
 
 # Resource Groups
 
-> List all *Resource Groups*
+### List all Resource Groups
 
 ```powershell
 Get-AzResourceGroup | Select-Object ResourceGroupName, Location
+```
+### List all Resources in a Resource Group
+
+```powershell
+get-azresource -ResourceGroupName $resourcegroup
 ```
 
 ## Create Resource Group
@@ -333,6 +339,15 @@ Get-AzureRmApiManagementApi -Context $apicontext
 
 > (some *Location* restriction may be required. I had to change from *West Europe* to *North Europe* before anything showed up in
 >  the **Installation Name** dropdown?)
+
+
+
+[Back to top](#table-of-content)
+
+# Event Grid
+
+## Create Standard Subscription
+
 
 
 

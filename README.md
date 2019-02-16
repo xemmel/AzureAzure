@@ -349,6 +349,39 @@ Get-AzureRmApiManagementApi -Context $apicontext
 ## Create Standard Subscription
 
 
+```powershell
+New-AzEventGridSubscription -EventSubscriptionName storageToRequestBin -ResourceId $storageId -Endpoint $endpoint
+```
+> $endpoint is a *WebHook* endpoint.
+> https://en3jyjvadsa46.x.pipedream.net/
+
+> $storageId (ResourceId) is the address for (for instance) the Storage Id
+> /subscriptions/4954f2df-57b6-4e04-bcc5-f92b0b63837c/resourceGroups/sandbox/providers/Microsoft.Storage/storageAccounts/sandstorage
+
+> NOTE: If you are using just an HTTP endpoint and not a true *WebHook* you will receive a **validationUrl** that you manually needs 
+> to call with a *GET Method*
+
+> Validation data sent to Endpoint
+
+```json
+[{
+  "id": "755980c4-8571-4ac5-bf53-2108a33e4445",
+  "topic": "/subscriptions/4954f2df-57b6-4e04-bcc5-f92b0b63837c/resourceGroups/sandbox/providers/microsoft.storage/storageaccounts/sandstorage",
+  "subject": "",
+  "data": {
+    "validationCode": "9F0C5719-2B8B-4DAF-9C36-F5FD3B5C8B7C",
+    "validationUrl": "https://rp-westeurope.eventgrid.azure.net/eventsubscriptions/storagetorequestbin/validate?id=9F0C5719-2B8B-4DAF-9C36-F5FD3B5C8B7C&t=2019-02-16T15:52:05.6430791Z&apiVersion=2019-01-01&token=3LYXtMkeUxlpMNwBcD2NcSkgZdgvHnXKB8HwBqElU5U%3d"
+  },
+  "eventType": "Microsoft.EventGrid.SubscriptionValidationEvent",
+  "eventTime": "2019-02-16T15:52:05.6430791Z",
+  "metadataVersion": "1",
+  "dataVersion": "2"
+}]
+
+```
+
+> When calling the *validationUrl* you should see the following message (note the spelling error, NICE MS!!)
+*"Webhook succesfully validated as a subscription endpoint"*
 
 
 [Back to top](#table-of-content)
